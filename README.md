@@ -108,6 +108,8 @@ With enriched logs in place, I visualized attacks on a **map-based dashboard**.
 
 The result: a dynamic map showing where brute-force login attempts were originating from geographically.
 
+![Attack Map](AttackMap.png)
+
 ---
 
 ## 🎯 Key Takeaways
