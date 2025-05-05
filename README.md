@@ -94,6 +94,8 @@ WindowsEvents
 
 This query matches attacker IPs to geographic data using CIDR block lookup.
 
+![KQL Query](KQLQuery.png)
+
 ---
 
 ## 🗺️ Part 6: Building a Live Attack Map (Sentinel Workbook)
