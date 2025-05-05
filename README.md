@@ -18,11 +18,13 @@ To simulate an attack target, I deployed a **Windows 10 Virtual Machine (VM)** i
 
 ### Steps:
 1. In the Azure portal, search for "Virtual Machines" and click **Create**.
-2. Choose **Windows 10** as the OS.
-3. Select a cost-effective size (e.g., I choose to go with Standard B2ms).
-4. Set a secure username and password and save these.
-5. Under **Networking**, create or assign a **Network Security Group (NSG)** rule to allow **all inbound traffic** from **any source or port** (this simulates a vulnerable public server).
-6. After deployment, **log into the VM** via RDP.
+2. Choose a convincing name for the VM (I went with EAST-2-COPR-VM)
+3. Choose the location of the VM (I went with East US 2 for all the resources)
+4. Choose **Windows 10** as the OS.
+5. Select a cost-effective size (e.g., I choose to go with Standard B2ms).
+6. Set a secure username and password and save these.
+7. Once created, under **Networking → Network Settings**, create a **Network Security Group (NSG)** rule to allow **all inbound traffic** from **any source or port** (this simulates a vulnerable public server).
+8. After deployment, **log into the VM** via RDP.
 
 ### 🔥 Important:
 - Once inside, I turned off the **Windows Firewall**:  
@@ -37,7 +39,7 @@ This makes the machine more exposed for the honeypot simulation.
 With the VM running:
 
 ### 🧪 Simulate Attack:
-- I intentionally failed **three login attempts** using a fake username (e.g., `admin`).
+- I intentionally failed **three login attempts** using an incorrect username (e.g., `admin`).
 - Then, I successfully logged in to simulate a real user.
 
 ### 🧾 View Logs:
