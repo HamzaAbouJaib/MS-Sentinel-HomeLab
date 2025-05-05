@@ -95,6 +95,7 @@ WindowsEvents
 This query matches attacker IPs to geographic data using CIDR block lookup.
 
 ![KQL Query](KQLQuery.png)
+![KQL Query 2](KQLQuery2.png)
 
 ---
 
