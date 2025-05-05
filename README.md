@@ -118,3 +118,34 @@ The result: a dynamic map showing where brute-force login attempts were originat
 - Visual dashboards communicate threats more effectively.
 - This lab simulates a **real-world detection pipeline** — from event generation to visualization.
 
+---
+
+## 🧹 Teardown: Shutting Down to Avoid Charges
+
+After completing the lab, it's **crucial to clean up your resources** to avoid unexpected Azure charges.
+
+### 🔻 Steps to Decommission Your Lab:
+
+1. **Stop or Delete Your Virtual Machine**
+   - Go to Azure Portal → Virtual Machines
+   - Select your VM and click **Stop** or **Delete**
+
+2. **Remove Network Security Rules**
+   - Go to the Network Security Group attached to your VM
+   - Delete any rules that allowed unrestricted inbound traffic
+
+3. **Delete Log Analytics Workspace**
+   - Azure Portal → Log Analytics Workspaces
+   - Select the workspace you created and delete it
+
+4. **Delete Microsoft Sentinel Instance**
+   - Go to Microsoft Sentinel → Configuration
+   - Remove your workspace from Sentinel, then delete the instance
+
+5. **Delete Watchlists and Workbooks**
+   - Delete the `geoip` Watchlist from Sentinel
+   - Remove any custom Workbooks you created
+
+6. **Double-check your Azure Subscription**
+   - Go to the **Cost Management** dashboard
+   - Make sure no services are still running that could incur costs
