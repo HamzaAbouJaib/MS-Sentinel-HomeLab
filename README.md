@@ -77,7 +77,7 @@ While logs showed **IP addresses**, they lacked location info.
 
 ### 🗺️ Solution: Use a GeoIP Watchlist
 
-1. Download the `geoip-summarized.csv` file (contains IP blocks and geo info).
+1. Download the [`geoip-summarized.csv`](https://drive.google.com/file/d/13EfjM_4BohrmaxqXZLB5VUBIz2sv9Siz/view) file (contains IP blocks and geo info).
 2. In Sentinel → **Watchlists** → Create a new Watchlist:
    - Name: `geoip`
    - Source Type: Local File
@@ -109,7 +109,43 @@ With enriched logs in place, I visualized attacks on a **map-based dashboard**.
 1. In Sentinel, go to **Workbooks** → Create New.
 2. Delete pre-filled content.
 3. Add a **Query** element.
-4. Switch to **Advanced Editor** and the **JSON template** (`map.json`).
+4. Switch to **Advanced Editor** and paste the **JSON template** provided below.
+
+```json
+{
+	"type": 3,
+	"content": {
+	"version": "KqlItem/1.0",
+	"query": "let GeoIPDB_FULL = _GetWatchlist(\"geoip\");\nlet WindowsEvents = SecurityEvent;\nWindowsEvents | where EventID == 4625\n| order by TimeGenerated desc\n| evaluate ipv4_lookup(GeoIPDB_FULL, IpAddress, network)\n| summarize FailureCount = count() by IpAddress, latitude, longitude, cityname, countryname\n| project FailureCount, AttackerIp = IpAddress, latitude, longitude, city = cityname, country = countryname,\nfriendly_location = strcat(cityname, \" (\", countryname, \")\");",
+	"size": 3,
+	"timeContext": {
+		"durationMs": 2592000000
+	},
+	"queryType": 0,
+	"resourceType": "microsoft.operationalinsights/workspaces",
+	"visualization": "map",
+	"mapSettings": {
+		"locInfo": "LatLong",
+		"locInfoColumn": "countryname",
+		"latitude": "latitude",
+		"longitude": "longitude",
+		"sizeSettings": "FailureCount",
+		"sizeAggregation": "Sum",
+		"opacity": 0.8,
+		"labelSettings": "friendly_location",
+		"legendMetric": "FailureCount",
+		"legendAggregation": "Sum",
+		"itemColorSettings": {
+		"nodeColorField": "FailureCount",
+		"colorAggregation": "Sum",
+		"type": "heatmap",
+		"heatmapPalette": "greenRed"
+		}
+	}
+	},
+	"name": "query - 0"
+}
+```
 
 The result: a dynamic map showing where brute-force login attempts were originating from geographically.
 
@@ -156,3 +192,7 @@ After completing the lab, it's **crucial to clean up your resources** to avoid u
 6. **Double-check your Azure Subscription**
    - Go to the **Cost Management** dashboard
    - Make sure no services are still running that could incur costs
+  
+## Acknowledgments
+
+This project walkthrough was inspired by [Josh Madakor's YouTube video](https://www.youtube.com/watch?v=g5JL2RIbThM&t) on building a cyber home lab with Microsoft Sentinel.
